@@ -562,6 +562,8 @@ window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
     var attendNo     = document.getElementById('attend-no');
     var eventsWrap   = document.getElementById('rsvp-events-wrap');
     var errorEl      = document.getElementById('rsvp-error');
+    var selectAllBtn = document.getElementById('rsvp-select-all');
+    var checkboxes   = form.querySelectorAll('input[name="events"]');
 
     // Reject popup
     var rejectPopup  = document.getElementById('rsvp-popup');
@@ -574,6 +576,32 @@ window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
     var acceptName   = document.getElementById('rsvp-accept-name');
 
     if (!form) return;
+
+    /* ── Select All toggle logic ── */
+    function updateSelectAllText() {
+      if (!checkboxes || checkboxes.length === 0) return;
+      var allChecked = Array.prototype.slice.call(checkboxes).every(function (cb) {
+        return cb.checked;
+      });
+      if (selectAllBtn) {
+        selectAllBtn.textContent = allChecked ? 'Deselect All' : 'Select All';
+      }
+    }
+
+    if (selectAllBtn) {
+      selectAllBtn.addEventListener('click', function () {
+        var allChecked = Array.prototype.slice.call(checkboxes).every(function (cb) {
+          return cb.checked;
+        });
+        checkboxes.forEach(function (cb) {
+          cb.checked = !allChecked;
+        });
+        updateSelectAllText();
+      });
+      checkboxes.forEach(function (cb) {
+        cb.addEventListener('change', updateSelectAllText);
+      });
+    }
 
     /* ── Show/hide events grid based on attendance choice ── */
     function handleAttendanceChange() {
@@ -682,6 +710,7 @@ window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
 
         form.reset();
         eventsWrap.classList.remove('open');
+        updateSelectAllText();
       }
 
       if (GOOGLE_SHEET_URL && GOOGLE_SHEET_URL !== 'YOUR_APP_SCRIPT_URL_HERE') {
