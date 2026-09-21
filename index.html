@@ -262,10 +262,6 @@
           <div class="gi-overlay"></div>
         </div>
 
-        <div class="gal-item tilt3d" data-src="images/gallery-3.jpeg">
-          <img src="images/gallery-3.jpeg" alt="Franklin &amp; Sarah" loading="lazy">
-          <div class="gi-overlay"></div>
-        </div>
 
         <div class="gal-item tilt3d" data-src="images/gallery-4.jpeg">
           <img src="images/gallery-4.jpeg" alt="Franklin &amp; Sarah" loading="lazy">
@@ -409,8 +405,14 @@
             </div>
           </div>
 
-          <!-- Events (shown when attending = yes) -->
+          <!-- Attendance Details (shown when attending = yes) -->
           <div class="rsvp-field rsvp-events-wrap card3d" id="rsvp-events-wrap">
+            <!-- Number of Guests -->
+            <div style="margin-bottom: 18px;">
+              <label class="rsvp-label" for="rsvp-guests">How many guests will be attending?</label>
+              <input class="rsvp-input" id="rsvp-guests" type="number" min="1" max="100" value="1" placeholder="Enter number of guests">
+            </div>
+
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
               <label class="rsvp-label" style="margin-bottom: 0;">Which Events Will You Attend?</label>
               <button type="button" id="rsvp-select-all" style="background: none; border: none; font-family: var(--f-sans); font-size: 0.65rem; color: var(--pink); text-decoration: underline; cursor: pointer; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; padding: 2px 4px;">Select All</button>

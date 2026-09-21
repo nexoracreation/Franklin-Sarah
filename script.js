@@ -561,6 +561,7 @@ window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
     var attendYes    = document.getElementById('attend-yes');
     var attendNo     = document.getElementById('attend-no');
     var eventsWrap   = document.getElementById('rsvp-events-wrap');
+    var guestsInput  = document.getElementById('rsvp-guests');
     var errorEl      = document.getElementById('rsvp-error');
     var selectAllBtn = document.getElementById('rsvp-select-all');
     var checkboxes   = form.querySelectorAll('input[name="events"]');
@@ -665,18 +666,41 @@ window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
       }
 
       var isAttending = attending.value === 'yes';
-      var checkedEvents = [];
 
-      if (isAttending) {
-        var eventCheckboxes = form.querySelectorAll('input[name="events"]:checked');
-        if (eventCheckboxes.length === 0) {
-          errorEl.textContent = '✦ Please select at least one event you will attend.';
+      // If declined: Do not enter in Google Sheets. Only show decline modal locally.
+      if (!isAttending) {
+        rejectName.textContent = '— ' + name + ' —';
+        openPopup(rejectPopup);
+        spawnRejectHearts();
+        form.reset();
+        eventsWrap.classList.remove('open');
+        if (guestsInput) guestsInput.value = '1';
+        updateSelectAllText();
+        return;
+      }
+
+      // Attending = yes: Validate guest count (1-100) and events selection
+      var guestCount = 1;
+      if (guestsInput) {
+        guestCount = parseInt(guestsInput.value, 10);
+        if (isNaN(guestCount) || guestCount < 1 || guestCount > 100) {
+          errorEl.textContent = '✦ Please enter a valid number of guests (1–100).';
+          guestsInput.focus();
+          guestsInput.style.borderColor = '#d63e72';
           return;
         }
-        eventCheckboxes.forEach(function (cb) {
-          checkedEvents.push(cb.value);
-        });
+        guestsInput.style.borderColor = '';
       }
+
+      var eventCheckboxes = form.querySelectorAll('input[name="events"]:checked');
+      if (eventCheckboxes.length === 0) {
+        errorEl.textContent = '✦ Please select at least one event you will attend.';
+        return;
+      }
+      var checkedEvents = [];
+      eventCheckboxes.forEach(function (cb) {
+        checkedEvents.push(cb.value);
+      });
 
       // Show loading state
       var originalBtnText = submitBtn.innerHTML;
@@ -687,29 +711,25 @@ window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
       var payload = {
         name: name,
         phone: phone,
-        attending: attending.value,
+        attending: 'yes',
+        guests: guestCount,
         events: checkedEvents,
         message: message
       };
 
-      // Clean up interface and display popup
+      // Clean up interface and display accept popup
       function handlePostSubmit() {
         submitBtn.disabled = false;
         submitBtn.innerHTML = originalBtnText;
         submitBtn.style.opacity = '';
 
-        if (isAttending) {
-          acceptName.textContent = '— ' + name + ' —';
-          openPopup(acceptPopup);
-          celebrate();
-        } else {
-          rejectName.textContent = '— ' + name + ' —';
-          openPopup(rejectPopup);
-          spawnRejectHearts();
-        }
+        acceptName.textContent = '— ' + name + ' —';
+        openPopup(acceptPopup);
+        celebrate();
 
         form.reset();
         eventsWrap.classList.remove('open');
+        if (guestsInput) guestsInput.value = '1';
         updateSelectAllText();
       }
 
