@@ -551,7 +551,7 @@ window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
      ══════════════════════════════════════════════════ */
   (function initRSVP() {
     // PASTE YOUR DEPLOYED GOOGLE APPS SCRIPT WEB APP URL HERE:
-    var GOOGLE_SHEET_URL = "https://script.google.com/macros/s/AKfycbx7xQsM7AqkeUlTZ9iyc8Bx2OvaSEntFQOZVSnXcI27X7CIq4e-EkX-DlOdH3Hj4QN6/exec";
+    var GOOGLE_SHEET_URL = "https://script.google.com/macros/s/AKfycbyXNW8iLepPmW91dYb5Jz9tyJ9rG-2UkX5OGE2H0SdOmbNHccj2zeKo92wXOhw6z8CQ-Q/exec";
 
     var form         = document.getElementById('rsvp-form');
     var nameInput    = document.getElementById('rsvp-name');
