@@ -709,11 +709,13 @@ window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
       submitBtn.style.opacity = '0.7';
 
       var payload = {
+        source: 'sangeet-wedding-site',
         name: name,
         phone: phone,
         attending: 'yes',
         guests: guestCount,
         guestCount: guestCount,
+        totalGuests: guestCount,
         events: checkedEvents,
         message: message
       };
