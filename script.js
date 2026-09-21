@@ -713,6 +713,7 @@ window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
         phone: phone,
         attending: 'yes',
         guests: guestCount,
+        guestCount: guestCount,
         events: checkedEvents,
         message: message
       };
