@@ -781,6 +781,7 @@ section {
 .rsvp-events-wrap { max-height:0; overflow:hidden; transition:max-height 0.55s var(--ease), opacity 0.4s ease; opacity:0; }
 .rsvp-events-wrap.open { max-height:1200px; opacity:1; }
 .rsvp-events-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:4px; }
+.rsvp-events-grid label:last-child:nth-child(odd) { grid-column:span 2; }
 .rsvp-ev-chk { cursor:pointer; }
 .rsvp-ev-chk input[type="checkbox"] { display:none; }
 .rsvp-ev-box { display:flex; align-items:flex-start; gap:12px; padding:14px; border:1.5px solid var(--bdr-p); border-radius:10px; background:#fff; transition:all 0.25s ease; position:relative; }
@@ -835,6 +836,7 @@ section {
 }
 @media (max-width:560px) {
   .rsvp-events-grid { grid-template-columns:1fr; }
+  .rsvp-events-grid label:last-child:nth-child(odd) { grid-column:auto; }
   .rsvp-attend-row  { grid-template-columns:1fr; }
   .cover-center {
     width: 100% !important;
